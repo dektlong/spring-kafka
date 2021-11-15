@@ -74,6 +74,10 @@ accelerator:
     description: Key/Value map of arbitrary Kafka client consumer properties
     inputType: multi-text
     dataType: [string]
+    defaultValue:
+      - backend
+      - frontend
+      - adopter-check
     dependsOn:
       name: changeConfig
       value: true
