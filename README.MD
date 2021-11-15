@@ -1,3 +1,3 @@
-# Event driven with Spring Cloud Stream and Kafka
+# Event driven with Spring and Kafka
 
-## Template for building an event driven microservice with Spring Cloud Stream and Kafka
+## Template for building an event driven application accessing Kafka, based on Spring Boot and Spring Cloud Function
