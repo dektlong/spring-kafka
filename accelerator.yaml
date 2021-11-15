@@ -3,7 +3,7 @@ accelerator:
   description: Template for building an event driven microservice with Spring Cloud Stream and Kafka
   iconUrl: https://raw.githubusercontent.com/dektlong/spring-kafka/main/spring-kafka.png
   tags:
-  - emerging-patterns
+  - cloud-native-devs
 
   options:
   
