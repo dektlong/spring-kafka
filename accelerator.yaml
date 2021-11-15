@@ -61,3 +61,11 @@ accelerator:
     dependsOn:
       name: changeConfig
       value: true
+  - name: autoCreateTopics
+    label: Auto creation of Topics
+    inputType: toggle
+    dataType: boolean
+    defaultValue: true
+    dependsOn:
+      name: changeConfig
+      value: true
