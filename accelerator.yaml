@@ -70,14 +70,12 @@ accelerator:
       name: changeConfig
       value: true
   - name: consumerProperties
-    label: Consumer Properties
-    description: Key/Value map of arbitrary Kafka client consumer properties
+    label: Consumer-producer poperties
+    description: Key/Value map of arbitrary Kafka properties passed to both consumer and producer
     inputType: multi-text
     dataType: [string]
     defaultValue:
-      - backend
-      - frontend
-      - adopter-check
+      - Key/Value map of Kafka properties
     dependsOn:
       name: changeConfig
       value: true
