@@ -3,7 +3,7 @@ accelerator:
   description: Template for building an event driven microservice with Spring and Kafka
   iconUrl: https://raw.githubusercontent.com/dektlong/spring-kafka/main/boot-kafka-icon.png
   tags:
-  - cloud-native
+  - emerging-patterns
 
   options:
   
