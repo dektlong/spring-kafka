@@ -27,7 +27,25 @@ accelerator:
     required: true
     dataType: string
     defaultValue: https://github.com/dektlong/my-event-driven
-  
+    
+  - name: secConfig
+    label: Secure connections
+    inputType: select
+    defaultValue: jaas
+    required: true
+    choices:
+      - value: kerberos
+        text: Kerberos
+      - value: jaas
+        text: Jaas
+        
+  - name: addKafkaMetrics
+    label: Add Kafka Mertics
+    inputType: toggle
+    display: true
+    dataType: boolean
+    defaultValue: false
+      
   - name: changeConfig
     label: Change Kafka Broker config
     description: Change default Spring Cloud Stream kafka broker configs
