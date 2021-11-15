@@ -1,0 +1,184 @@
+accelerator:
+  displayName: Event-driven microservice with Spring and Kafka
+  description: Template for building an event driven microservice with Spring and Kafka
+  iconUrl: https://raw.githubusercontent.com/simple-starters/icons/master/icon-boot.png
+  tags:
+  - onlinestore-dev
+
+  options:
+  
+  #deployment
+  - name: appDeploymentType
+    label: Deployment environment
+    description: Type of deployment configurations
+    required: true
+    defaultValue: tap
+    inputType: select
+    choices:
+      - value: tap
+        text: Tanzu App Platform
+      - value: k8s
+        text: K8s deployment
+      - value: k8sSkaffold
+        text: K8s deployment with Skaffold configs
+      - value: cf
+        text: Tanzu App Service (cf)
+  - name: addAlv
+    label: Add application live view
+    description: Add application live view sidecar to your deployment config
+    inputType: toggle 
+    defaultValue: false
+    dataType: boolean
+    dependsOn:
+      name: appDeploymentType
+      value: k8s
+        
+  - name: gitRepo
+    label: Git repo
+    inputType: text
+    required: true
+    dataType: string
+    defaultValue: https://github.com/dektlong/dekt4pets-backend
+  
+  - name: javaVersion
+    label: Java version
+    description: Java runtime version
+    required: true
+    defaultValue: "11"
+    inputType: select
+    choices:
+      - value: "11"
+        text: 11 
+      - value: "17"
+        text: 17 (dev only)
+        
+  #apis groups
+  - name: firstApiGroup
+    label: First level API group
+    description: Name of the first level API group
+    defaultValue: apiGroup1
+    required: true
+    defaultValue: apiGroup1
+  - name: secondApiGroup
+    label: Second level API group
+    display: true
+    description: Name of the second API group
+    defaultValue: apiGroup2
+  - name: thirdApiGroup
+    label: Third  level API group
+    description: Name of the third API group
+    defaultValue: apiGroup3
+  - name: forthApiGroup
+    label: Forth level API group
+    description: Name of the forth API group
+    defaultValue: apiGroup4
+  - name: fifthApiGroup
+    label: Fifth level API group
+    description: Name of the Fifth API group
+    defaultValue: apiGroup5
+
+  #optional - data entity      
+  - name: addDataEntity
+    label: Add data service entity bean
+    description: Add a data service entity bean class to the generated code
+    inputType: toggle
+    display: true
+    dataType: boolean
+    defaultValue: false
+  - name: entityType
+    label: Data service entity type
+    description: Select the data service type
+    dependsOn:
+      name: addDataEntity
+    inputType: select
+    defaultValue: mysql
+    choices:
+      - value: mysql
+        text: MySQL
+      - value: postgres
+        text: PostgreSQL
+      - value: mongo
+        text: Mongo
+      - value: redis
+        text: Redis
+  - name: entityName
+    label: Data service entity name
+    description: Data service entity name
+    defaultValue: mybean
+    dependsOn:
+      name: addDataEntity
+      
+      
+engine:
+  merge:
+    #generic transformation
+    - includes: ["**"]
+      excludes: [ "config/**", "src/main/java/io/storebackend/api/data/*" ]
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: app-name
+              with: "#artifactId"
+  #deployment transformations
+    - includes: [ "config/k8s/gateway-dev.yaml", "config/k8s/routes.yaml"]
+      condition: "#appDeploymentType != 'cf'"
+      chain:
+        - type: YTT
+    - includes: [ "config/k8s/workload.yaml" ]
+      condition: "#appDeploymentType == 'tap'"
+      chain:
+        - type: YTT
+    - includes: [ "config/k8s/deployment.yaml" ]
+      condition: "#appDeploymentType == 'k8s'"
+      chain:
+        - type: YTT
+    - includes: [ "config/k8s/deployment.yaml", "config/k8s/skaffold.yaml" ]
+      condition: "#appDeploymentType == 'k8sSkaffold'"
+      chain:
+        - type: YTT
+    - includes: [ "config/cf/manifest.yaml"]
+      condition: "#appDeploymentType == 'cf'"
+      chain:
+        - type: YTT
+    - includes: [ "config/cf/*.json" ]
+      condition: "#appDeploymentType == 'cf'"
+      chain:
+        - type: ReplaceText
+          substitutions:
+          - text: app-name
+            with: "#artifactId"
+          - text: api-group1
+            with: "#firstApiGroup"
+          - text: api-group2
+            with: "#secondApiGroup"
+    
+    #data entity transformations
+    - includes: [ "src/main/java/io/storebackend/api/data/MongoTemplate.java" ]
+      condition: "#entityType == 'mongo'"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: mybean
+              with: "#entityName"
+    - includes: [ "src/main/java/io/storebackend/api/data/RedisTemplate.java" ]
+      condition: "#entityType == 'redis'"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: mybean
+              with: "#entityName"
+    - includes: [ "src/main/java/io/storebackend/api/data/PostgresTemplate.java" ]
+      condition: "#entityType == 'postgres'"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: mybean
+              with: "#entityName" 
+    - includes: [ "src/main/java/io/storebackend/api/data/MySQLTemplate.java" ]
+      condition: "#entityType == 'mysql'"
+      chain:
+        - type: ReplaceText
+          substitutions:
+            - text: mybean
+              with: "#entityName" 
+    
