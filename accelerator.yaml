@@ -47,7 +47,6 @@ accelerator:
   - name: autoCreateTopics
     label: Auto creation of Topics
     inputType: toggle
-    display: true
     dataType: boolean
     defaultValue: true
     dependsOn:
