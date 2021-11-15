@@ -1,9 +1,9 @@
 accelerator:
   displayName: Event-driven microservice with Spring and Kafka
   description: Template for building an event driven microservice with Spring and Kafka
-  iconUrl: https://raw.githubusercontent.com/simple-starters/icons/master/icon-boot.png
+  iconUrl: https://raw.githubusercontent.com/dektlong/spring-kafka/main/boot-kafka-icon.png
   tags:
-  - onlinestore-dev
+  - cloud-native
 
   options:
   
@@ -109,76 +109,4 @@ accelerator:
       name: addDataEntity
       
       
-engine:
-  merge:
-    #generic transformation
-    - includes: ["**"]
-      excludes: [ "config/**", "src/main/java/io/storebackend/api/data/*" ]
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: app-name
-              with: "#artifactId"
-  #deployment transformations
-    - includes: [ "config/k8s/gateway-dev.yaml", "config/k8s/routes.yaml"]
-      condition: "#appDeploymentType != 'cf'"
-      chain:
-        - type: YTT
-    - includes: [ "config/k8s/workload.yaml" ]
-      condition: "#appDeploymentType == 'tap'"
-      chain:
-        - type: YTT
-    - includes: [ "config/k8s/deployment.yaml" ]
-      condition: "#appDeploymentType == 'k8s'"
-      chain:
-        - type: YTT
-    - includes: [ "config/k8s/deployment.yaml", "config/k8s/skaffold.yaml" ]
-      condition: "#appDeploymentType == 'k8sSkaffold'"
-      chain:
-        - type: YTT
-    - includes: [ "config/cf/manifest.yaml"]
-      condition: "#appDeploymentType == 'cf'"
-      chain:
-        - type: YTT
-    - includes: [ "config/cf/*.json" ]
-      condition: "#appDeploymentType == 'cf'"
-      chain:
-        - type: ReplaceText
-          substitutions:
-          - text: app-name
-            with: "#artifactId"
-          - text: api-group1
-            with: "#firstApiGroup"
-          - text: api-group2
-            with: "#secondApiGroup"
-    
-    #data entity transformations
-    - includes: [ "src/main/java/io/storebackend/api/data/MongoTemplate.java" ]
-      condition: "#entityType == 'mongo'"
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: mybean
-              with: "#entityName"
-    - includes: [ "src/main/java/io/storebackend/api/data/RedisTemplate.java" ]
-      condition: "#entityType == 'redis'"
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: mybean
-              with: "#entityName"
-    - includes: [ "src/main/java/io/storebackend/api/data/PostgresTemplate.java" ]
-      condition: "#entityType == 'postgres'"
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: mybean
-              with: "#entityName" 
-    - includes: [ "src/main/java/io/storebackend/api/data/MySQLTemplate.java" ]
-      condition: "#entityType == 'mysql'"
-      chain:
-        - type: ReplaceText
-          substitutions:
-            - text: mybean
-              with: "#entityName" 
-    
+ 
