@@ -35,7 +35,7 @@ accelerator:
     display: true
     dataType: boolean
     defaultValue: false
-    
+
   - name: defaultBrokerPort
     label: Broker port
     inputType: number
@@ -50,6 +50,9 @@ accelerator:
     display: true
     dataType: boolean
     defaultValue: true
+    dependsOn:
+      name: changeConfig
+      value: true
       
   - name: consumerProperties
     label: Consumer Properties
