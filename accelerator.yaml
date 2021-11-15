@@ -1,13 +1,12 @@
 accelerator:
-  displayName: Event-driven microservice with Spring and Kafka
-  description: Template for building an event driven microservice with Spring and Kafka
+  displayName: Event-driven with Spring and Kafka
+  description: Template for building an event driven microservice with Spring Cloud Stream and Kafka
   iconUrl: https://raw.githubusercontent.com/dektlong/spring-kafka/main/boot-kafka-icon.png
   tags:
   - emerging-patterns
 
   options:
   
-  #deployment
   - name: appDeploymentType
     label: Deployment environment
     description: Type of deployment configurations
@@ -19,94 +18,75 @@ accelerator:
         text: Tanzu App Platform
       - value: k8s
         text: K8s deployment
-      - value: k8sSkaffold
-        text: K8s deployment with Skaffold configs
       - value: cf
         text: Tanzu App Service (cf)
-  - name: addAlv
-    label: Add application live view
-    description: Add application live view sidecar to your deployment config
-    inputType: toggle 
-    defaultValue: false
-    dataType: boolean
-    dependsOn:
-      name: appDeploymentType
-      value: k8s
         
   - name: gitRepo
     label: Git repo
     inputType: text
     required: true
     dataType: string
-    defaultValue: https://github.com/dektlong/dekt4pets-backend
+    defaultValue: https://github.com/dektlong/my-event-driven
   
-  - name: javaVersion
-    label: Java version
-    description: Java runtime version
+  - name: phytonVersion
+    label: Phyton version
+    description: Phyton version
     required: true
-    defaultValue: "11"
+    defaultValue:  "3.8"
     inputType: select
     choices:
-      - value: "11"
-        text: 11 
-      - value: "17"
-        text: 17 (dev only)
-        
-  #apis groups
-  - name: firstApiGroup
-    label: First level API group
-    description: Name of the first level API group
-    defaultValue: apiGroup1
+      - value: "3.7"
+        text: 3.7
+      - value: "3.8"
+        text: 3.8
+      - value: "3.10"
+        text: "3.10 (Dev only)"
+    
+  - name: coreServices
+    label: Core services
+    description: Select the core pyhton services to add to your project
+    inputType: checkbox
     required: true
-    defaultValue: apiGroup1
-  - name: secondApiGroup
-    label: Second level API group
-    display: true
-    description: Name of the second API group
-    defaultValue: apiGroup2
-  - name: thirdApiGroup
-    label: Third  level API group
-    description: Name of the third API group
-    defaultValue: apiGroup3
-  - name: forthApiGroup
-    label: Forth level API group
-    description: Name of the forth API group
-    defaultValue: apiGroup4
-  - name: fifthApiGroup
-    label: Fifth level API group
-    description: Name of the Fifth API group
-    defaultValue: apiGroup5
-
-  #optional - data entity      
-  - name: addDataEntity
-    label: Add data service entity bean
-    description: Add a data service entity bean class to the generated code
+    defaultValue:  gunicorn
+    choices:
+      - value: flake
+        text: Flake
+      - value: gunicorn
+        text: Gunicorn
+      - value: flask
+        text: Flask
+  
+  - name: adv
+    label: Add data processing
+    description: Include advanced data processing
     inputType: toggle
     display: true
     dataType: boolean
     defaultValue: false
-  - name: entityType
-    label: Data service entity type
-    description: Select the data service type
+    
+  - name: dataLibs
+    label: Data processing libraries 
+    description: Select the data processing libraries to add to your project
+    inputType: checkbox
+    dataType: [string]
+    defaultValue: [ numpy ]
     dependsOn:
-      name: addDataEntity
-    inputType: select
-    defaultValue: mysql
+      name: adv
+      value: true
     choices:
-      - value: mysql
-        text: MySQL
-      - value: postgres
-        text: PostgreSQL
-      - value: mongo
-        text: Mongo
-      - value: redis
-        text: Redis
-  - name: entityName
-    label: Data service entity name
-    description: Data service entity name
-    defaultValue: mybean
-    dependsOn:
-      name: addDataEntity
-      
-      
- 
+      - value: pandas
+        text: Pandas
+      - value: numpy
+        text: NumPy
+      - value: matplotlib
+        text: Matplotlib    
+      - value: seaborn
+        text: Seaborn
+   
+  - name: addML
+    label: Add machine learning
+    description: Add machine learing with scikit-learn
+    inputType: toggle
+    display: true
+    dataType: boolean
+    defaultValue: false
