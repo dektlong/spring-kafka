@@ -28,65 +28,62 @@ accelerator:
     dataType: string
     defaultValue: https://github.com/dektlong/my-event-driven
   
-  - name: phytonVersion
-    label: Phyton version
-    description: Phyton version
-    required: true
-    defaultValue:  "3.8"
-    inputType: select
-    choices:
-      - value: "3.7"
-        text: 3.7
-      - value: "3.8"
-        text: 3.8
-      - value: "3.10"
-        text: "3.10 (Dev only)"
-    
-  - name: coreServices
-    label: Core services
-    description: Select the core pyhton services to add to your project
-    inputType: checkbox
-    required: true
-    defaultValue:  gunicorn
-    choices:
-      - value: flake
-        text: Flake
-      - value: gunicorn
-        text: Gunicorn
-      - value: flask
-        text: Flask
-  
-  - name: adv
-    label: Add data processing
-    description: Include advanced data processing
+  - name: changeConfig
+    label: Change Kafka Broker config
+    description: Change default Spring Cloud Stream kafka broker configs
     inputType: toggle
     display: true
     dataType: boolean
     defaultValue: false
     
-  - name: dataLibs
-    label: Data processing libraries 
-    description: Select the data processing libraries to add to your project
-    inputType: checkbox
-    dataType: [string]
-    defaultValue: [ numpy ]
+  - name: defaultBrokerPort
+    label: Broker port
+    inputType: number
+    defaultValue: 9092
     dependsOn:
-      name: adv
+      name: changeConfig
       value: true
+      
+  - name: autoCreateTopics
+    label: Auto creation of Topics
+    inputType: toggle
+    display: true
+    dataType: boolean
+    defaultValue: true
+      
+  - name: consumerProperties
+    label: Consumer Properties
+    description: Key/Value map of arbitrary Kafka client consumer properties
+    inputType: multi-text
+    dataType: [string]
+    dependsOn:
+      name: changeConfig
+      value: true
+  
+  - name: producerProperties
+    label: Producer Properties
+    description: Key/Value map of arbitrary Kafka client producer properties
+    inputType: multi-text
+    dataType: [string]
+    dependsOn:
+      name: changeConfig
+      value: true
+
+  - name: secConfig
+    label: Secure connections
+    inputType: select
+    defaultValue: jaas
+    required: true
     choices:
-      - value: pandas
-        text: Pandas
-      - value: numpy
-        text: NumPy
-      - value: matplotlib
-        text: Matplotlib    
-      - value: seaborn
-        text: Seaborn
-   
-  - name: addML
-    label: Add machine learning
-    description: Add machine learing with scikit-learn
+      - value: kerberos
+        text: Kerberos
+      - value: jaas
+        text: Jaas
+        
+  - name: addKafkaMetrics
+    label: Add Kafka Mertics
     inputType: toggle
     display: true
     dataType: boolean
     defaultValue: false
+      
