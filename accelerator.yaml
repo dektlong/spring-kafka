@@ -38,8 +38,8 @@ accelerator:
 
   - name: defaultBrokerPort
     label: Broker port
-    inputType: number
-    defaultValue: 9092
+    inputType: text
+    defaultValue: "9092"
     dependsOn:
       name: changeConfig
       value: true
