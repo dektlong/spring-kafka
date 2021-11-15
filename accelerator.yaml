@@ -69,3 +69,16 @@ accelerator:
     dependsOn:
       name: changeConfig
       value: true
+  - name: consumerProperties
+    label: Consumer Properties
+    description: Key/Value map of arbitrary Kafka client consumer properties
+    inputType: multi-text
+    dataType: [string]
+    dependsOn:
+      name: changeConfig
+      value: true
+
+    
+      
+  
+
