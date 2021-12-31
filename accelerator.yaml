@@ -20,11 +20,12 @@ accelerator:
   #      text: Tanzu App Service manifest
         
   - name: gitRepo
-    label: Git repo
+    label: Source repository
+    description: Name of your git repo (not the full URL)
     inputType: text
     required: true
     dataType: string
-    defaultValue: my-event-driven
+    defaultValue: my-events
     
   - name: secConfig
     label: Secure connections
@@ -52,7 +53,7 @@ accelerator:
     dataType: boolean
     defaultValue: false
 
-    - name: kafkaBrokerConfig
+  - name: kafkaBrokerConfig
     label: Override Broker default configs 
     description: Key/Value map of Kafka broker configs 
     inputType: multi-text
@@ -60,6 +61,5 @@ accelerator:
     defaultValue:
       - broker-port=9092
       - auto-topic-creation=true
-      dependsOn:
+    dependsOn:
       name: changeConfig
-      value: true
