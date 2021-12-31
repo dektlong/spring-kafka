@@ -39,7 +39,7 @@ accelerator:
         
   - name: addKafkaMetrics
     label: Add Kafka Mertics
-    inputType: toggle
+    inputType: checkbox
     display: true
     dataType: boolean
     defaultValue: false
@@ -47,21 +47,21 @@ accelerator:
   - name: changeConfig
     label: Change Kafka Broker config
     description: Change default Spring Cloud Stream kafka broker configs
-    inputType: toggle
+    inputType: checkbox
     display: true
     dataType: boolean
     defaultValue: false
 
   - name: defaultBrokerPort
     label: Broker port
-    inputType: text
+    #inputType: text
     defaultValue: "9092"
     dependsOn:
       name: changeConfig
       value: true
   - name: autoCreateTopics
     label: Auto creation of Topics
-    inputType: toggle
+    inputType: checkbox
     dataType: boolean
     defaultValue: true
     dependsOn:
