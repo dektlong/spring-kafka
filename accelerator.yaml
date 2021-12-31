@@ -24,7 +24,7 @@ accelerator:
     inputType: text
     required: true
     dataType: string
-    defaultValue: /my-event-driven
+    defaultValue: my-event-driven
     
   - name: secConfig
     label: Secure connections
