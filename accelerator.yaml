@@ -52,14 +52,14 @@ accelerator:
     dataType: boolean
     defaultValue: false
 
-    - name: consumerProperties
-    label: Consumer-producer poperties
-    description: Key/Value map of arbitrary Kafka properties passed to both consumer and producer
+    - name: kafkaBrokerConfig
+    label: Override Broker default configs 
+    description: Key/Value map of Kafka broker configs 
     inputType: multi-text
     dataType: [string]
     defaultValue:
       - broker-port=9092
-      -auto-topic-creation=true
+      - auto-topic-creation=true
       dependsOn:
       name: changeConfig
       value: true
