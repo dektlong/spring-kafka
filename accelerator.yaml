@@ -24,7 +24,7 @@ accelerator:
     inputType: text
     required: true
     dataType: string
-    defaultValue: https://github.com/dektlong/my-event-driven
+    defaultValue: /my-event-driven
     
   - name: secConfig
     label: Secure connections
@@ -52,28 +52,14 @@ accelerator:
     dataType: boolean
     defaultValue: false
 
-  - name: defaultBrokerPort
-    label: Broker port
-    #inputType: text
-    defaultValue: "9092"
-    dependsOn:
-      name: changeConfig
-      value: true
-  - name: autoCreateTopics
-    label: Auto creation of Topics
-    inputType: checkbox
-    dataType: boolean
-    defaultValue: true
-    dependsOn:
-      name: changeConfig
-      value: true
-  - name: consumerProperties
+    - name: consumerProperties
     label: Consumer-producer poperties
     description: Key/Value map of arbitrary Kafka properties passed to both consumer and producer
     inputType: multi-text
     dataType: [string]
     defaultValue:
-      - Key/Value map of Kafka properties
-    dependsOn:
+      - broker-port=9092
+      -auto-topic-creation=true
+      dependsOn:
       name: changeConfig
       value: true
