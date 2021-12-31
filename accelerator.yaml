@@ -7,17 +7,17 @@ accelerator:
 
   options:
   
-  - name: appDeploymentType
-    label: Deployment environment
-    description: Type of deployment configurations
-    required: true
-    defaultValue: tap
-    inputType: select
-    choices:
-      - value: tap
-        text: Tanzu App Platform workload
-      - value: cf
-        text: Tanzu App Service manifest
+  #- name: appDeploymentType
+  #  label: Deployment environment
+  #  description: Type of deployment configurations
+  #  required: true
+  #  defaultValue: tap
+  #  inputType: select
+  #  choices:
+  #    - value: tap
+  #      text: Tanzu App Platform workload
+  #    - value: cf
+  #      text: Tanzu App Service manifest
         
   - name: gitRepo
     label: Git repo
@@ -77,8 +77,3 @@ accelerator:
     dependsOn:
       name: changeConfig
       value: true
-
-    
-      
-  
-
